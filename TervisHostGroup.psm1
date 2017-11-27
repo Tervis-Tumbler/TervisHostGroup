@@ -1,4 +1,4 @@
-﻿$ModulePath = (Get-Module -ListAvailable TervisOracle).ModuleBase
+﻿$ModulePath = (Get-Module -ListAvailable TervisHostGroup).ModuleBase
 . $ModulePath\Definition.ps1
 
 function Get-HostGroupHostDNSName {
