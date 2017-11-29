@@ -106,7 +106,7 @@ function Get-TervisHostGroupCNAMEAndA {
         $CNAMEHosts = $Hosts |
         Where-Object DNSRecordType -EQ CNAME 
 
-        $AHosts = ForEach ($CNAMEHost in $CNAMEHosts) {
+        $DNSHosts = ForEach ($CNAMEHost in $CNAMEHosts) {
             $CNAME = $CNAMEHost.HostName | Get-TervisDNSName -EnvironmentName $CNAMEHost.EnvironmentName
 
             $DNSAName = Resolve-DnsName -Name $CNAME |
@@ -114,11 +114,10 @@ function Get-TervisHostGroupCNAMEAndA {
             Select-Object -ExpandProperty Name
 
             $DNSAName | Get-TervisHost -EnvironmentName $CNAMEHost.EnvironmentName -DNSRecordType "A"
+            $CNAME | Get-TervisHost -EnvironmentName $CNAMEHost.EnvironmentName -DNSRecordType "CNAME"
         }
 
-        $Hosts += $AHosts
-        
-        $Hosts |
+        $DNSHosts |
         Sort-Object -Unique -Property HostName,EnvironmentName,DNSRecordType
     }
 }
