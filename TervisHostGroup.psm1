@@ -58,3 +58,67 @@ function Get-HostGroupCNAMEToDNSAMapping {
     % { Resolve-DnsName -Name $_ -Type CNAME } |
     Select-Object -Property Name, NameHost
 }
+
+function Get-HostGroupHost {
+    Param (
+        [Parameter(Mandatory,ValueFromPipeline)]$HostGroupName
+    )
+    process {
+        $HostGroup = $HostGroupDefinition | 
+        Where-Object Name -EQ $HostGroupName
+
+        if ($HostGroup.HostGroupName) {
+            $HostGroup.HostGroupName | Get-HostGroupHost
+        }
+        
+        if ($HostGroup.EnvironmentName) {
+            foreach ($EnvironmentName in $HostGroup.EnvironmentName) {
+                $HostGroup.Host | Get-TervisHost -EnvironmentName $EnvironmentName -DNSRecordType $HostGroup.DNSRecordType
+            }
+        } elseif ($HostGroup.Host) {
+            $HostGroup.Host | Get-TervisHost -DNSRecordType $HostGroup.DNSRecordType
+        }
+    }
+}
+
+function Get-TervisHost {
+    Param (
+        [Parameter(Mandatory,ValueFromPipeline)]$HostName,
+        $EnvironmentName,
+        $DNSRecordType
+    )
+    process {
+        [PSCustomObject][Ordered]@{
+            HostName = $HostName
+            EnvironmentName = $EnvironmentName
+            DNSRecordType = $DNSRecordType
+        }
+    }
+}
+
+function Get-TervisHostGroupCNAMEAndA {
+    Param (
+        [Parameter(Mandatory,ValueFromPipeline)]$HostGroupName
+    )
+    process {
+        $Hosts = Get-HostGroupHost -HostGroupName $HostGroupName
+
+        $CNAMEHosts = $Hosts |
+        Where-Object DNSRecordType -EQ CNAME 
+
+        $AHosts = ForEach ($CNAMEHost in $CNAMEHosts) {
+            $CNAME = $CNAMEHost.HostName | Get-TervisDNSName -EnvironmentName $CNAMEHost.EnvironmentName
+
+            $DNSAName = Resolve-DnsName -Name $CNAME |
+            Where-Object QueryType -EQ "A" |
+            Select-Object -ExpandProperty Name
+
+            $DNSAName | Get-TervisHost -EnvironmentName $CNAMEHost.EnvironmentName -DNSRecordType "A"
+        }
+
+        $Hosts += $AHosts
+        
+        $Hosts |
+        Sort-Object -Unique -Property HostName,EnvironmentName,DNSRecordType
+    }
+}
