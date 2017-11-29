@@ -64,6 +64,7 @@ TrackIT
 INF-DC01
 INF-DC2
 INF-DC3
+passwordstate
 "@ -split "`r`n"
 },
 [PSCustomObject]@{
