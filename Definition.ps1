@@ -4,7 +4,7 @@
 },
 [PSCustomObject]@{
     Name = "Helios"
-    HostGroupName = "MES","ContractorSupportInfrastructure"
+    HostGroupName = "MES","ContractorSupportInfrastructure","HeliosDeveloperDesktop"
 },
 [PSCustomObject]@{
     Name = "Oracle"
@@ -75,4 +75,11 @@ MESIIS
 MESSQl
 "@ -split "`r`n"
     EnvironmentName = "Delta","Epsilon","Production"
+},
+[PSCustomObject]@{
+    Name = "HeliosDeveloperDesktop"
+    DNSRecordType = "A"
+    Host = @"
+BOde-vm 
+"@ -split "`r`n"
 }
