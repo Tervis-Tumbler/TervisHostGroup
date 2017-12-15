@@ -3,6 +3,10 @@
     HostGroupName = "Oracle","ContractorSupportInfrastructure","OracleSupportInfrastructure"
 },
 [PSCustomObject]@{
+    Name = "Fadel"
+    HostGroupName = "Oracle","ContractorSupportInfrastructure","OracleSupportInfrastructure"
+},
+[PSCustomObject]@{
     Name = "Helios"
     HostGroupName = "MES","ContractorSupportInfrastructure","HeliosDeveloperDesktop"
 },
@@ -48,6 +52,7 @@ rpweblogic
     Host = @"
 OraDBARMT
 RemoteDesktopWebAccess
+OracleEnterpriseManager
 "@ -split "`r`n"
     EnvironmentName = "Infrastructure"
 },
@@ -65,6 +70,7 @@ INF-DC01
 INF-DC2
 INF-DC3
 passwordstate
+P-OctopusDeploy
 "@ -split "`r`n"
 },
 [PSCustomObject]@{
