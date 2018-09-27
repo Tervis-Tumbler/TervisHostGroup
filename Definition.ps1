@@ -12,7 +12,7 @@
 },
 [PSCustomObject]@{
     Name = "Oracle"
-    HostGroupName = "OracleNonZeta","OracleZeta"
+    HostGroupName = "OracleNonZeta","OracleZeta","OracleTransition"
 },
 [PSCustomObject]@{
     Name = "OracleNonZeta"
@@ -87,5 +87,13 @@ MESSQl
     DNSRecordType = "A"
     Host = @"
 BOde-vm 
+"@ -split "`r`n"
+},
+[PSCustomObject]@{
+    Name = "OracleTransition"
+    DNSRecordType = "A"
+    Host = @"
+DLT-ODBEE02
+DLT-Weblogic02
 "@ -split "`r`n"
 }
