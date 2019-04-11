@@ -7,6 +7,10 @@
     HostGroupName = "Oracle","ContractorSupportInfrastructure","OracleSupportInfrastructure"
 },
 [PSCustomObject]@{
+    Name = "eComchain"
+    HostGroupName = "eComchainSupportInfrastructure"
+},
+[PSCustomObject]@{
     Name = "Helios"
     HostGroupName = "MES","ContractorSupportInfrastructure","HeliosDeveloperDesktop"
 },
@@ -14,6 +18,7 @@
     Name = "Oracle"
     HostGroupName = "OracleNonZeta","OracleZeta","OracleTransition"
 },
+
 [PSCustomObject]@{
     Name = "OracleNonZeta"
     DNSRecordType = "CNAME"
@@ -96,4 +101,21 @@ BOde-vm
 DLT-ODBEE02
 DLT-Weblogic02
 "@ -split "`r`n"
+},
+[PSCustomObject]@{
+    Name = "eComchainSupportInfrastructure"
+    DNSRecordType = "A"
+    Host = @"
+INF-DC3
+TFS2012
+dlt-ias01
+dlt-weblogic01
+dlt-infadac
+dlt-odbee01
+DLT-OBIAPP
+INF-PWState01
+INF-DC01
+INF-DC2
+"@ -split "`r`n"
+        
 }
