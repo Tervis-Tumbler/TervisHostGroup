@@ -11,6 +11,10 @@
     HostGroupName = "eComchainSupportInfrastructure"
 },
 [PSCustomObject]@{
+    Name = "KerkeringBarberio"
+    HostGroupName = "KerkeringBarberioSupportInfrastructure"
+},
+[PSCustomObject]@{
     Name = "Helios"
     HostGroupName = "MES","ContractorSupportInfrastructure","HeliosDeveloperDesktop"
 },
@@ -117,5 +121,17 @@ INF-PWState01
 INF-DC01
 INF-DC2
 "@ -split "`r`n"
-        
+},
+[PSCustomObject]@{
+    Name = "KerkeringBarberioSupportInfrastructure"
+    DNSRecordType = "A"
+    Host = @"
+INF-DC3
+INF-DC01
+INF-DC2
+ebsapps-prd
+SharePoint2007
+p-weblogic01
+"@ -split "`r`n"
 }
+
